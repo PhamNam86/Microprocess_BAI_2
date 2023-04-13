@@ -1,0 +1,127 @@
+CCS PCM C Compiler, Version 4.074, 22034               10-Jun-22 15:43
+
+               Filename: Untitled.lst
+
+               ROM used: 95 words (1%)
+                         Largest free fragment is 2048
+               RAM used: 8 (2%) at main() level
+                         9 (2%) worst case
+               Stack:    1 locations
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   028
+0003:  NOP
+.................... #include <16f887.h>  
+.................... //////// Standard Header file for the PIC16F887 device //////////////// 
+.................... #device PIC16F887 
+.................... #list 
+....................  
+.................... #device *=16 ADC=8 // Khai bao during con tro 16-bt  
+.................... #FUSES NOWDT, HS, NOPUT, NOBROWNOUT,NOPROTECT, NOLVP  
+.................... #use delay(clock=8000000) // Khai bao su ðung Thach Anh 8 - Mhz 
+0012:  MOVLW  22
+0013:  MOVWF  04
+0014:  BCF    03.7
+0015:  MOVF   00,W
+0016:  BTFSC  03.2
+0017:  GOTO   025
+0018:  MOVLW  02
+0019:  MOVWF  78
+001A:  CLRF   77
+001B:  DECFSZ 77,F
+001C:  GOTO   01B
+001D:  DECFSZ 78,F
+001E:  GOTO   01A
+001F:  MOVLW  97
+0020:  MOVWF  77
+0021:  DECFSZ 77,F
+0022:  GOTO   021
+0023:  DECFSZ 00,F
+0024:  GOTO   018
+0025:  BCF    0A.3
+0026:  BCF    0A.4
+0027:  GOTO   05A (RETURN)
+....................  
+.................... int i; 
+.................... const char led7[] = {0x3f,0x06, 0x5b, 0x4f,0x66,0x6d, 0x7d, 0x07,0x7f,0x6f}; 
+.................... void main() 
+.................... { 
+0028:  CLRF   04
+0029:  BCF    03.7
+002A:  MOVLW  1F
+002B:  ANDWF  03,F
+002C:  BSF    03.5
+002D:  BSF    03.6
+002E:  MOVF   09,W
+002F:  ANDLW  C0
+0030:  MOVWF  09
+0031:  BCF    03.6
+0032:  BCF    1F.4
+0033:  BCF    1F.5
+0034:  MOVLW  00
+0035:  BSF    03.6
+0036:  MOVWF  08
+0037:  BCF    03.5
+0038:  CLRF   07
+0039:  CLRF   08
+003A:  CLRF   09
+.................... set_tris_a(0x00);  
+003B:  MOVLW  00
+003C:  BSF    03.5
+003D:  BCF    03.6
+003E:  MOVWF  05
+.................... set_tris_b(0x00);  
+003F:  MOVWF  06
+....................  
+.................... //output_a(0x07); 
+.................... //OUTPUT_B(0x00); 
+.................... output_a(0x08);  
+0040:  CLRF   05
+0041:  MOVLW  08
+0042:  BCF    03.5
+0043:  MOVWF  05
+.................... while(TRUE) 
+.................... { 
+.................... for(i=1;i<10;i) 
+0044:  MOVLW  01
+0045:  MOVWF  20
+0046:  MOVF   20,W
+0047:  SUBLW  09
+0048:  BTFSS  03.0
+0049:  GOTO   05D
+.................... { 
+....................  
+.................... output_b(~led7[i]); 
+004A:  MOVF   20,W
+004B:  CALL   004
+004C:  MOVWF  78
+004D:  MOVWF  21
+004E:  COMF   21,F
+004F:  BSF    03.5
+0050:  CLRF   06
+0051:  BCF    03.5
+0052:  MOVF   21,W
+0053:  MOVWF  06
+.................... i=i+2; 
+0054:  MOVLW  02
+0055:  ADDWF  20,F
+.................... delay_ms(500); 
+0056:  MOVWF  21
+0057:  MOVLW  FA
+0058:  MOVWF  22
+0059:  GOTO   012
+005A:  DECFSZ 21,F
+005B:  GOTO   057
+.................... } 
+005C:  GOTO   046
+....................  
+.................... } 
+005D:  GOTO   044
+.................... } 
+005E:  SLEEP
+
+Configuration Fuses:
+   Word  1: 2CF2   HS NOWDT NOPUT MCLR NOPROTECT NOCPD NOBROWNOUT IESO FCMEN NOLVP NODEBUG
+   Word  2: 3FFF   NOWRT BORV40
